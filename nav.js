@@ -111,7 +111,7 @@ function renderNav(activePage) {
             <li><a href="self-check.html" class="${activePage === 'self' ? 'active' : ''}">Self‑Check</a></li>
             <li><a href="guidance.html" class="${activePage === 'guide' ? 'active' : ''}">Guidance</a></li>
             <li><a href="resources.html" class="${activePage === 'res' ? 'active' : ''}">Resources</a></li>
-            <li><a href="login.html" class="${activePage === 'login' ? 'active' : ''}">Logout</a></li>
+            <li><a href="index.html" class="${activePage === 'login' ? 'active' : ''}">Logout</a></li>
         </ul>
     `;
 
@@ -131,4 +131,5 @@ function renderNav(activePage) {
         // Change icon based on state (☰ or X)
         navToggle.textContent = isExpanded ? '☰' : '✕';
     });
+
 }
