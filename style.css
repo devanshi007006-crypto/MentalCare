@@ -1,0 +1,378 @@
+/* style.css - FINAL MODIFIED VERSION (Including Canvas Styles) */
+
+/* --- 1. Basic Reset and Global Styles --- */
+* {
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: #f0f4f7; /* Lighter, calming background */
+    color: #333;
+}
+
+/* Base link styling */
+a {
+    color: #00796b; /* Darker teal for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #004d40;
+    text-decoration: underline;
+}
+
+/* General Layouts */
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Card Styling for content blocks (Enhanced Attractiveness) */
+.card {
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparent to show canvas */
+    padding: 25px;
+    border-radius: 12px; /* Smoother corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* More noticeable lift */
+    margin-bottom: 25px;
+}
+
+/* Form elements and Buttons */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #455a64;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #b0bec5;
+    font-size: 1rem;
+    background-color: #fcfcfc;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #00796b; /* Primary teal */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+    background: #004d40;
+}
+
+.btn-primary:active {
+    transform: scale(0.99);
+}
+
+.btn-secondary { /* New style for the Reset button */
+    display: inline-block;
+    padding: 12px 25px;
+    background: #eceff1; /* Light gray background */
+    color: #455a64; 
+    border: 1px solid #b0bec5;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #cfd8dc;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap; /* Allows buttons to stack on small screens */
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #e0f7fa, #b2dfdb);
+    color: #004d40;
+    padding: 50px 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #00796b;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #546e7a;
+}
+
+/* Utility Class */
+.hidden {
+    display: none !important;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    color: #777;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparent to show canvas */
+}
+
+/* Emergency Note */
+.emergency {
+    color: #c62828; 
+    font-weight: bold;
+    background: #ffebee; 
+    padding: 15px;
+    border-radius: 6px;
+    border: 2px solid #c62828;
+    margin-top: 15px;
+}
+
+/* --- Styles for Form Interactivity --- */
+.question {
+    margin-bottom: 20px;
+}
+
+.selected-value {
+    display: block;
+    margin-top: -10px; 
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    color: #00796b;
+    font-weight: 600;
+    padding-left: 5px;
+}
+
+/* --- CANVAS BACKGROUND STYLES --- */
+#dynamic-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Place behind all content */
+    pointer-events: none; /* Allows user interaction with elements underneath */
+    background: linear-gradient(135deg, #e0f7fa, #b2dfdb); /* Gradient matches Hero background */
+}
+
+
+/* --- 2. Navbar Styling (Desktop First) --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #00695c;
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+}
+
+.nav-brand {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    font-size: 1.3rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex; 
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: #e0f2f1;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 5px 0;
+    transition: color 0.3s ease;
+}
+
+.nav-links a.active {
+    font-weight: 600;
+    border-bottom: 3px solid #fff;
+    color: #ffffff;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+/* Hamburger Menu Icon (hidden by default on desktop) */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.6rem;
+    cursor: pointer;
+    line-height: 1; 
+    padding: 5px;
+}
+
+/* --- 3. Login Page Styling --- */
+.center-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e0f7fa, #b2dfdb);
+    padding: 20px; 
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+}
+
+.login-card h1 {
+    color: #004d40;
+    margin-bottom: 10px;
+}
+
+.login-card .subtitle {
+    margin-bottom: 20px;
+}
+
+.login-card label {
+    text-align: left;
+}
+
+.note {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: left;
+}
+
+/* --- 4. RESPONSIVENESS (Media Queries for Mobile) --- */
+@media (max-width: 768px) {
+    /* Navbar Mobile Layout */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px; /* Adjust based on navbar height */
+        left: 0;
+        background: #004d40; 
+        padding: 10px 0;
+        z-index: 1000;
+        gap: 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links.active-menu {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 12px 20px;
+        border-bottom: 1px solid #00695c;
+        text-align: center;
+    }
+    
+    .nav-links li:last-child a {
+        border-bottom: none;
+    }
+
+    .nav-links a.active {
+        background: #00796b;
+        border-bottom: none;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero .subtitle {
+        font-size: 1rem;
+    }
+
+    /* Make buttons full width on small screens */
+    .form-actions {
+        flex-direction: column;
+    }
+    .btn-primary, .btn-secondary {
+        width: 100%;
+    }
+}
+/* style.css - ADDITIONAL STYLES FOR LOGIN PAGE */
+
+/* --- 1. Animation for Login Card Entry --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card {
+    /* Keep existing styles like max-width, padding, box-shadow, etc. */
+    width: 100%;
+    max-width: 420px;
+    
+    /* Apply the animation */
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* --- 2. Enhanced Input Focus State --- */
+.login-card input:focus {
+    border-color: #00796b; /* Primary color border on focus */
+    box-shadow: 0 0 5px rgba(0, 121, 107, 0.5); /* Subtle teal glow */
+    outline: none; /* Remove default browser outline */
+}
+
+/* --- 3. Styling for the Demo Note --- */
+.login-card .note {
+    /* Keep existing styles */
+    margin-top: 1rem;
+    padding: 10px;
+    border-radius: 6px;
+    background: #e0f2f1; /* Very light teal background */
+    border: 1px dashed #4db6ac;
+    color: #004d40;
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-align: left; /* Ensure text aligns nicely inside the padded box */
+}
+
+/* --- 4. Styling the Login Button (if different from primary) --- */
+/* (The .btn-primary style is already defined and looks good, but ensuring specific styling) */
+.login-card .btn-primary {
+    margin-top: 15px; /* Add extra space above the button */
+    width: 100%; /* Make the button full width */
+}

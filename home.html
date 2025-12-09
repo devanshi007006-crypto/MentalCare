@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MindCare Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="mainNav" class="navbar"></nav>
+
+    <header class="hero">
+        <h1>MindCare: Your Compass for Well-being</h1>
+        <p class="subtitle">
+            A secure, private space to reflect on your mental health and access curated guidance. You are not alone on this journey.
+        </p>
+    </header>
+
+    <main class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+            
+            <section class="card">
+                <h2>1. Take a Self-Check 📝</h2>
+                <p>
+                    Start your reflection by answering a few simple, confidential questions about your mood and feelings over the last two weeks.
+                </p>
+                <a href="self-check.html" class="btn-primary" style="display: block; text-align: center;">Start Reflection</a>
+            </section>
+
+            <section class="card">
+                <h2>2. Find Guidance ✨</h2>
+                <p>
+                    Explore articles and motivational content focused on practical, everyday self-care strategies, resilience building, and emotional regulation.
+                </p>
+                <a href="guidance.html" class="btn-primary" style="display: block; text-align: center;">View Self-Care Tips</a>
+            </section>
+
+            <section class="card">
+                <h2>3. Access Resources 📞</h2>
+                <p>
+                    Quickly find professional support, crisis hotlines, and reputable educational links for specialized care whenever you need it.
+                </p>
+                <a href="resources.html" class="btn-primary" style="display: block; text-align: center;">Get Support Now</a>
+            </section>
+        </div>
+
+        <section class="card" style="margin-top: 30px;">
+            <h2>Our Core Promise</h2>
+            <p>
+                MindCare is built on the principle that self-awareness is the first step toward well-being. This platform is **not a diagnostic tool** and does not store your personal check-in results. It is designed to be a supportive companion on your path to mental health.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>This site is for educational purposes only. Always consult a qualified professional for diagnosis or treatment.</p>
+    </footer>
+
+    <script src="nav.js"></script>
+    <script>renderNav("home");</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mental Health Self Check</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <nav id="mainNav" class="navbar"></nav>
+    
+    <header class="hero">
+        <h1>Mental Health Self Check</h1>
+        <p class="subtitle">
+            This tool is for self-reflection only and does not replace professional diagnosis or treatment.
+        </p>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2>Before you start</h2>
+            <p>
+                Your answers are not stored on a server in this demo. Results are for your personal awareness only.
+                For serious or persistent symptoms, please talk to a doctor, counselor, or trusted adult.
+            </p>
+            <p style="font-style: italic; color: var(--text-muted);">
+                Please consider how often these statements were true for you over the **last 2 weeks**.
+            </p>
+        </section>
+
+        <section class="card">
+            <h2>How have you been feeling?</h2>
+            <form id="assessmentForm">
+                <div class="question">
+                    <label>1. How often have you felt down, sad, or hopeless in the last 2 weeks?</label>
+                    <select name="q1" required>
+                        <option value="">Select an option</option>
+                        <option value="0">Not at all</option>
+                        <option value="1">Several days</option>
+                        <option value="2">More than half the days</option>
+                        <option value="3">Nearly every day</option>
+                    </select>
+                    <span id="value-q1" class="selected-value"></span> </div>
+
+                <div class="question">
+                    <label>2. How often have you felt nervous, anxious, or on edge?</label>
+                    <select name="q2" required>
+                        <option value="">Select an option</option>
+                        <option value="0">Not at all</option>
+                        <option value="1">Sometimes</option>
+                        <option value="2">Often</option>
+                        <option value="3">Nearly all the time</option>
+                    </select>
+                    <span id="value-q2" class="selected-value"></span> </div>
+
+                <div class="question">
+                    <label>3. How often have you had trouble sleeping (too much or too little)?</label>
+                    <select name="q3" required>
+                        <option value="">Select an option</option>
+                        <option value="0">Rarely</option>
+                        <option value="1">Sometimes</option>
+                        <option value="2">Often</option>
+                        <option value="3">Almost every night</option>
+                    </select>
+                    <span id="value-q3" class="selected-value"></span> </div>
+
+                <div class="question">
+                    <label>4. How much have stress or emotions affected your daily life (study, work, relationships)?</label>
+                    <select name="q4" required>
+                        <option value="">Select an option</option>
+                        <option value="0">Not at all</option>
+                        <option value="1">A little</option>
+                        <option value="2">Quite a bit</option>
+                        <option value="3">A lot</option>
+                    </select>
+                    <span id="value-q4" class="selected-value"></span> </div>
+
+                <div class="question">
+                    <label>5. Have you had thoughts that life is not worth living, or that you want to hurt yourself?</label>
+                    <select name="q5" required>
+                        <option value="">Select an option</option>
+                        <option value="0">No</option>
+                        <option value="3">Yes, sometimes</option>
+                        <option value="4">Yes, often or now</option>
+                    </select>
+                    <span id="value-q5" class="selected-value"></span> </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Get my guidance</button>
+                    <button type="button" id="resetForm" class="btn-secondary">Reset Answers</button> </div>
+            </form>
+        </section>
+
+        <section id="resultSection" class="card hidden">
+            <h2>Your result</h2>
+            <p id="scoreText"></p>
+            <p id="messageText"></p>
+
+            <div id="guidanceMild" class="guidance hidden">
+                <h3>Self-care ideas</h3>
+                <ul>
+                    <li>Keep a simple mood journal to notice patterns.</li>
+                    <li>Maintain regular sleep, meals, and light exercise.</li>
+                    <li>Stay connected with friends or family you trust.</li>
+                </ul>
+            </div>
+
+            <div id="guidanceModerate" class="guidance hidden">
+                <h3>Next helpful steps</h3>
+                <ul>
+                    <li>Talk to a counselor, therapist, or doctor about how you’ve been feeling.</li>
+                    <li>Use mental health apps for breathing exercises or guided journaling.</li>
+                    <li>Share your feelings with a trusted friend, mentor, or family member.</li>
+                </ul>
+            </div>
+
+            <div id="guidanceSevere" class="guidance hidden">
+                <h3>Important: please reach out</h3>
+                <p>
+                    Your answers suggest you may be going through a very difficult time. Consider speaking with a mental
+                    health professional as soon as possible and reaching out to someone you trust.
+                </p>
+                <p class="emergency">
+                    If you are in immediate danger or thinking about harming yourself, contact local emergency services
+                    or a crisis helpline right now.
+                </p>
+            </div>
+
+            <div class="help-links">
+                <h3>Support resources</h3>
+                <p>
+                    For country-specific helplines and online chat support, you can use an international directory such as
+                    <a href="https://findahelpline.com" target="_blank" rel="noopener noreferrer">
+                        Find a Helpline
+                    </a>.
+                </p>
+                <p>
+                    In India, you can call or text 
+                    <strong><a href="tel:+919999666555">+91 9999 666 555</a></strong> for free, confidential help 24/7, or use chat on the official website.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>This website is for educational purposes only and not a substitute for professional care.</p>
+    </footer>
+
+    <script src="self-check.js"></script>
+    <script src="nav.js"></script>
+    <script>renderNav("self");</script>
+</body>
+</html>

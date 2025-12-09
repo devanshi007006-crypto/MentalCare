@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MindCare Login/Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="center-page">
+    <div class="card login-card">
+        <h1 id="formTitle">Welcome Back</h1>
+        <p class="subtitle" id="formSubtitle">
+            Please log in to continue.
+        </p>
+
+        <form id="authForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" required minlength="4">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" required minlength="4">
+
+            <div id="confirmPasswordGroup" class="hidden">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" minlength="4">
+            </div>
+
+            <div id="message"></div>
+
+            <button type="submit" id="submitButton" class="btn-primary">Login</button>
+        </form>
+        
+        <button id="toggleButton" class="btn-link">Need an account? Register Here</button>
+
+        <p class="note">
+            Demo credentials (default): user: <strong>student</strong>, pass: <strong>1234</strong>. 
+            New credentials will be saved in this browser only.
+        </p>
+    </div>
+
+    <script>
+        const authForm = document.getElementById("authForm");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+        const confirmPasswordGroup = document.getElementById("confirmPasswordGroup");
+        const messageDiv = document.getElementById("message");
+        const submitButton = document.getElementById("submitButton");
+        const toggleButton = document.getElementById("toggleButton");
+        const formTitle = document.getElementById("formTitle");
+        const formSubtitle = document.getElementById("formSubtitle");
+
+        // Use localStorage for client-side storage
+        const STORAGE_KEY = 'mindcare_user_credentials';
+        
+        // Initialize default user if none exist
+        if (!localStorage.getItem(STORAGE_KEY)) {
+            const initialUsers = { "student": "1234" };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(initialUsers));
+        }
+
+        let isRegisterMode = false;
+
+        function toggleMode(register) {
+            isRegisterMode = register;
+            confirmPasswordGroup.classList.toggle("hidden", !isRegisterMode);
+            confirmPasswordInput.required = isRegisterMode;
+
+            if (isRegisterMode) {
+                formTitle.textContent = "Create New Account";
+                formSubtitle.textContent = "Enter your desired username and password.";
+                submitButton.textContent = "Register";
+                toggleButton.textContent = "Already have an account? Login Here";
+            } else {
+                formTitle.textContent = "Welcome Back";
+                formSubtitle.textContent = "Please log in to continue.";
+                submitButton.textContent = "Login";
+                toggleButton.textContent = "Need an account? Register Here";
+            }
+            messageDiv.textContent = ""; // Clear messages on toggle
+        }
+
+        toggleButton.addEventListener("click", () => toggleMode(!isRegisterMode));
+
+        authForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            messageDiv.textContent = "";
+            const u = usernameInput.value.trim();
+            const p = passwordInput.value.trim();
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+            if (u.length < 4 || p.length < 4) {
+                messageDiv.textContent = "Username and password must be at least 4 characters long.";
+                return;
+            }
+
+            if (isRegisterMode) {
+                const pc = confirmPasswordInput.value.trim();
+
+                if (p !== pc) {
+                    messageDiv.textContent = "Error: Passwords do not match.";
+                    return;
+                }
+                
+                if (users[u]) {
+                    messageDiv.textContent = "Error: This username is already taken.";
+                    return;
+                }
+
+                // REGISTRATION SUCCESS
+                users[u] = p; // Store the new user
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+                messageDiv.textContent = `Success! User '${u}' registered. Logging in...`;
+                
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1000);
+
+            } else {
+                // LOGIN MODE
+                if (users[u] === p) {
+                    // LOGIN SUCCESS
+                    window.location.href = "home.html";
+                } else {
+                    // LOGIN FAILURE
+                    messageDiv.textContent = "Incorrect username or password.";
+                }
+            }
+        });
+
+        // Initialize to Login mode on load
+        toggleMode(false);
+    </script>
+</body>
+</html>
