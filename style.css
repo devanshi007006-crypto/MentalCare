@@ -555,8 +555,8 @@ footer {
     color: #075521; /* Deep Orange */
 }
 
-/* --- 5. Further Optimization for Small Phones (Max 600px) --- */
-@media (max-width: 600px) {
+/* --- 5. Further Optimization for Small Phones (Max 550px) --- */
+@media (max-width: 550px) {
     /* Adjust padding to maximize screen space */
     .container {
         padding: 0 10px;
@@ -587,4 +587,5 @@ footer {
         font-size: 1.1rem;
     }
 }
+
 
