@@ -554,3 +554,37 @@ footer {
 .selected-value {
     color: #075521; /* Deep Orange */
 }
+
+/* --- 5. Further Optimization for Small Phones (Max 600px) --- */
+@media (max-width: 600px) {
+    /* Adjust padding to maximize screen space */
+    .container {
+        padding: 0 10px;
+        margin-top: 10px;
+    }
+
+    /* Reduce font size for headlines */
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .card h2 {
+        font-size: 1.3rem;
+    }
+    
+    /* Decrease padding on cards */
+    .card {
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    /* Adjust navbar branding size */
+    .nav-brand {
+        font-size: 1.1rem;
+    }
+}
+
