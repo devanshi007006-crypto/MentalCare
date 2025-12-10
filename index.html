@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>MindCare Login/Register</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" rel="stylesheet">
 </head>
 <body class="center-page">
     <div class="card login-card">
@@ -12,123 +13,177 @@
             Please log in to continue.
         </p>
 
-        <form id="authForm">
-            <label for="username">Username</label>
-            <input type="text" id="username" required minlength="4">
+       <form id="authForm">
+        <div class="input-group">
+    <label for="email">Email</label><i class="fas fa-envelope icon"></i>
+    <input type="email" id="email" required placeholder="name@example.com" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
 
-            <label for="password">Password</label>
-            <input type="password" id="password" required minlength="4">
+    <label for="password">Password</label><i class="fas fa-lock icon"></i>
+    <input type="password" id="password" required minlength="5" placeholder="enter your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}"
+    title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters">
 
-            <div id="confirmPasswordGroup" class="hidden">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" minlength="4">
-            </div>
+    <div id="confirmPasswordGroup" class="hidden">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" minlength="5" placeholder="confirm your password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}"
+        title="Must contain at least one number and one uppercase and lowercase letter, and at least 5 or more characters">
+    </div>
+</div>
+    <div class="form-options">
+        <label class="checkbox-container">
+            <input type="checkbox" id="rememberMe">
+            Remember Me
+            <span class="checkmark"></span>
+        </label>
+        <a href="#" id="forgotPassword" class="btn-link-sm">Forgot Password?</a>
+    </div>
+    
+    <div id="message"></div>
 
-            <div id="message"></div>
+    <button type="submit" id="submitButton" class="btn-primary">Login</button>
+</form>
 
-            <button type="submit" id="submitButton" class="btn-primary">Login</button>
-        </form>
-        
-        <button id="toggleButton" class="btn-link">Need an account? Register Here</button>
+<button id="toggleButton" class="btn-link">Need an account? Register Here</button>
 
-        <p class="note">
-            Demo credentials (default): user: <strong>student</strong>, pass: <strong>1234</strong>. 
-            New credentials will be saved in this browser only.
-        </p>
+<p class="note"> 
+    New credentials will be saved in this browser only.
+</p>
     </div>
 
     <script>
-        const authForm = document.getElementById("authForm");
-        const usernameInput = document.getElementById("username");
-        const passwordInput = document.getElementById("password");
-        const confirmPasswordInput = document.getElementById("confirmPassword");
-        const confirmPasswordGroup = document.getElementById("confirmPasswordGroup");
-        const messageDiv = document.getElementById("message");
-        const submitButton = document.getElementById("submitButton");
-        const toggleButton = document.getElementById("toggleButton");
-        const formTitle = document.getElementById("formTitle");
-        const formSubtitle = document.getElementById("formSubtitle");
+        // Define storage key and a default demo user
+    const STORAGE_KEY = 'mindcare-users';
+    const DEMO_EMAIL = 'student@demo.com'; // New demo email
+    const DEMO_PASSWORD = '1234';          // Existing demo password (4 chars)
+    const REMEMBER_ME_KEY = 'mindcare-remember-email';
 
-        // Use localStorage for client-side storage
-        const STORAGE_KEY = 'mindcare_user_credentials';
-        
-        // Initialize default user if none exist
-        if (!localStorage.getItem(STORAGE_KEY)) {
-            const initialUsers = { "student": "1234" };
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(initialUsers));
+    let isRegisterMode = false;
+
+    // Get elements
+    const formTitle = document.getElementById('formTitle');
+    const formSubtitle = document.getElementById('formSubtitle');
+    const authForm = document.getElementById('authForm');
+    const emailInput = document.getElementById('email'); // Updated ID
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordGroup = document.getElementById('confirmPasswordGroup');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const messageDiv = document.getElementById('message');
+    const submitButton = document.getElementById('submitButton');
+    const toggleButton = document.getElementById('toggleButton');
+    
+    // NEW ELEMENTS
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+    const forgotPasswordLink = document.getElementById('forgotPassword');
+
+    // --- Core Functions ---
+
+    // 1. Load users from localStorage or set default
+    let users = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    // Ensure demo user exists
+    if (!users[DEMO_EMAIL]) {
+        users[DEMO_EMAIL] = DEMO_PASSWORD;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+    }
+
+    function toggleMode(toRegister) {
+        isRegisterMode = toRegister;
+        if (isRegisterMode) {
+            formTitle.textContent = 'Join MindCare';
+            formSubtitle.textContent = 'Create your private account.';
+            confirmPasswordGroup.classList.remove('hidden');
+            confirmPasswordInput.setAttribute('required', 'required');
+            submitButton.textContent = 'Register';
+            toggleButton.textContent = 'Already have an account? Login Here';
+        } else {
+            formTitle.textContent = 'Welcome Back';
+            formSubtitle.textContent = 'Please log in to continue.';
+            confirmPasswordGroup.classList.add('hidden');
+            confirmPasswordInput.removeAttribute('required');
+            submitButton.textContent = 'Login';
+            toggleButton.textContent = 'Need an account? Register Here';
+        }
+    }
+
+    // 2. Remember Me Logic (Load)
+    function loadRememberedEmail() {
+        const rememberedEmail = localStorage.getItem(REMEMBER_ME_KEY);
+        if (rememberedEmail) {
+            emailInput.value = rememberedEmail;
+            rememberMeCheckbox.checked = true;
+        }
+    }
+
+    // 3. Form Submission Handler
+    authForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        messageDiv.textContent = ''; // Clear previous messages
+
+        const u = emailInput.value.trim();
+        const p = passwordInput.value.trim();
+
+        if (u.length < 4 || p.length < 4) {
+            messageDiv.textContent = "Email and password must be at least 4 characters long.";
+            return;
         }
 
-        let isRegisterMode = false;
+        // Registration Logic
+        if (isRegisterMode) {
+            const pc = confirmPasswordInput.value.trim();
 
-        function toggleMode(register) {
-            isRegisterMode = register;
-            confirmPasswordGroup.classList.toggle("hidden", !isRegisterMode);
-            confirmPasswordInput.required = isRegisterMode;
-
-            if (isRegisterMode) {
-                formTitle.textContent = "Create New Account";
-                formSubtitle.textContent = "Enter your desired username and password.";
-                submitButton.textContent = "Register";
-                toggleButton.textContent = "Already have an account? Login Here";
-            } else {
-                formTitle.textContent = "Welcome Back";
-                formSubtitle.textContent = "Please log in to continue.";
-                submitButton.textContent = "Login";
-                toggleButton.textContent = "Need an account? Register Here";
+            if (p !== pc) {
+                messageDiv.textContent = "Error: Passwords do not match.";
+                return;
             }
-            messageDiv.textContent = ""; // Clear messages on toggle
-        }
-
-        toggleButton.addEventListener("click", () => toggleMode(!isRegisterMode));
-
-        authForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            messageDiv.textContent = "";
-            const u = usernameInput.value.trim();
-            const p = passwordInput.value.trim();
-            const users = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-            if (u.length < 4 || p.length < 4) {
-                messageDiv.textContent = "Username and password must be at least 4 characters long.";
+            
+            if (users[u]) {
+                messageDiv.textContent = "Error: This email is already registered.";
                 return;
             }
 
-            if (isRegisterMode) {
-                const pc = confirmPasswordInput.value.trim();
+            // REGISTRATION SUCCESS
+            users[u] = p; // Store the new user
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+            messageDiv.textContent = `Success! User '${u}' registered. Logging in...`;
+            
+            // Auto-login and redirect
+            setTimeout(() => {
+                window.location.href = "home.html";
+            }, 1000);
 
-                if (p !== pc) {
-                    messageDiv.textContent = "Error: Passwords do not match.";
-                    return;
-                }
+        } else {
+            // LOGIN MODE
+            if (users[u] === p) {
+                // LOGIN SUCCESS
                 
-                if (users[u]) {
-                    messageDiv.textContent = "Error: This username is already taken.";
-                    return;
-                }
-
-                // REGISTRATION SUCCESS
-                users[u] = p; // Store the new user
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
-                messageDiv.textContent = `Success! User '${u}' registered. Logging in...`;
-                
-                setTimeout(() => {
-                    window.location.href = "home.html";
-                }, 1000);
-
-            } else {
-                // LOGIN MODE
-                if (users[u] === p) {
-                    // LOGIN SUCCESS
-                    window.location.href = "home.html";
+                // Remember Me Logic (Save)
+                if (rememberMeCheckbox.checked) {
+                    localStorage.setItem(REMEMBER_ME_KEY, u);
                 } else {
-                    // LOGIN FAILURE
-                    messageDiv.textContent = "Incorrect username or password.";
+                    localStorage.removeItem(REMEMBER_ME_KEY);
                 }
+                
+                window.location.href = "home.html";
+            } else {
+                // LOGIN FAILURE
+                messageDiv.textContent = "Incorrect email or password.";
             }
-        });
+        }
+    });
 
-        // Initialize to Login mode on load
-        toggleMode(false);
+    // 4. Toggle Mode Button
+    toggleButton.addEventListener('click', function() {
+        toggleMode(!isRegisterMode);
+    });
+
+    // 5. Forgot Password Handler (DEMO ONLY)
+    forgotPasswordLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        alert("This is a demo. In a real application, you would be taken to a page to request a password reset link be sent to your email.");
+    });
+
+
+    // Initialize on load
+    toggleMode(false);
+    loadRememberedEmail(); // Load remembered email on startup
     </script>
 </body>
 </html>
