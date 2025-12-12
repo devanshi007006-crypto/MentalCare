@@ -310,7 +310,7 @@ footer {
 }
 
 /* --- 4. RESPONSIVENESS (Media Queries for Mobile) --- */
-@media (max-width: 768px) {
+@media (max-width: 580px) {
     /* Navbar Mobile Layout */
     .nav-links {
         display: none;
@@ -368,6 +368,25 @@ footer {
     }
     .btn-primary, .btn-secondary {
         width: 100%;
+    }
+    .container {
+        padding: 0 10px;
+        margin-top: 10px;
+    }
+    
+    .card h2 {
+        font-size: 1.3rem;
+    }
+    
+    /* Decrease padding on cards */
+    .card {
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    /* Adjust navbar branding size */
+    .nav-brand {
+        font-size: 1.1rem;
     }
 }
 /* style.css - ADDITIONAL STYLES FOR LOGIN PAGE */
@@ -555,37 +574,7 @@ footer {
     color: #075521; /* Deep Orange */
 }
 
-/* --- 5. Further Optimization for Small Phones (Max 550px) --- */
-@media (max-width: 550px) {
-    /* Adjust padding to maximize screen space */
-    .container {
-        padding: 0 10px;
-        margin-top: 10px;
-    }
 
-    /* Reduce font size for headlines */
-    .hero h1 {
-        font-size: 1.8rem;
-    }
 
-    .hero .subtitle {
-        font-size: 0.9rem;
-    }
-    
-    .card h2 {
-        font-size: 1.3rem;
-    }
-    
-    /* Decrease padding on cards */
-    .card {
-        padding: 15px;
-        border-radius: 8px;
-    }
-
-    /* Adjust navbar branding size */
-    .nav-brand {
-        font-size: 1.1rem;
-    }
-}
 
 
